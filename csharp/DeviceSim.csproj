@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- .NET 8 LTS – ARM Cortex-A53 크로스 컴파일 지원 -->
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>devicesim</AssemblyName>
+    <RootNamespace>DeviceSim</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <!-- 단독 실행 파일 (ARM 배포용) -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <Optimize>true</Optimize>
+    <Deterministic>true</Deterministic>
+    <!-- Windows 콘솔 앱 매니페스트 -->
+    <ApplicationManifest Condition="'$(OS)' == 'Windows_NT'">app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- NAudio: Windows WASAPI/WaveIn/WaveOut (Windows 개발 환경용)
+         Linux/ARM 타겟에서는 ALSA P/Invoke (AlsaCapture/AlsaPlayer) 를 사용합니다.
+         NAudio 는 Windows 에서만 실제 장치 접근에 사용됩니다.
+         RuntimeInformation.IsOSPlatform 으로 런타임에 선택됩니다. -->
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <!-- CLI 파라미터 파싱 -->
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+  </ItemGroup>
+
+  <!-- 테스트 디렉터리 소스 제외 (별도 프로젝트로 분리) -->
+  <ItemGroup>
+    <Compile Remove="Tests/**" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+# .NET 빌드 아티팩트
+bin/
+obj/
+out/
+out-arm64/
+*.user
+*.suo
+.vs/

@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit"                  Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- 주 프로젝트 소스를 공유 (DLL 참조 없이 소스 공유) -->
+  <ItemGroup>
+    <!-- 코어 유틸리티 -->
+    <Compile Include="../Downmix.cs" />
+    <!-- 인터페이스 -->
+    <Compile Include="../IAudioCapture.cs" />
+    <Compile Include="../IAudioPlayer.cs" />
+    <!-- 장치 백엔드 -->
+    <Compile Include="../AudioCapture.cs" />
+    <Compile Include="../AudioPlayer.cs" />
+    <Compile Include="../AlsaCapture.cs" />
+    <Compile Include="../AlsaPlayer.cs" />
+    <Compile Include="../WasapiCapture.cs" />
+    <Compile Include="../WasapiPlayer.cs" />
+    <Compile Include="../CoreAudioCapture.cs" />
+    <Compile Include="../CoreAudioPlayer.cs" />
+    <Compile Include="../EchoGate.cs" />
+    <Compile Include="../WsSession.cs" />
+    <!-- 파일 백엔드 -->
+    <Compile Include="../FileCapture.cs" />
+    <Compile Include="../FilePlayer.cs" />
+  </ItemGroup>
+
+  <!-- NAudio (WasapiCapture/WasapiPlayer 컴파일에 필요) -->
+  <ItemGroup>
+    <PackageReference Include="NAudio" Version="2.2.1" />
+  </ItemGroup>
+
+</Project>
