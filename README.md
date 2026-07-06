@@ -160,6 +160,70 @@ sequenceDiagram
 
 각 에뮬레이터의 상세 실행 방법은 하위 README 를 참조하세요.
 
+### C# 실행 전: .NET 8 설치 확인/설치
+
+- C# 에뮬레이터(`devicesim/csharp`)는 **.NET 8 SDK**가 필요합니다.
+- 먼저 설치 여부를 확인합니다.
+
+```bash
+dotnet --list-sdks
+```
+
+- 출력에 `8.0.xxx`가 있으면 추가 설치 없이 바로 실행 가능합니다.
+- `8.0.xxx`가 없다면 OS별로 설치 후 다시 확인하세요.
+
+#### Linux (x64 / ARM64)
+
+```bash
+# 배포판 정보 확인
+cat /etc/os-release
+
+# Ubuntu 계열: Microsoft 패키지 피드 등록
+wget https://packages.microsoft.com/config/ubuntu/$(. /etc/os-release; echo $VERSION_ID)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+# Debian 계열은 ubuntu 대신 debian 사용:
+# wget https://packages.microsoft.com/config/debian/$(. /etc/os-release; echo $VERSION_ID)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+rm packages-microsoft-prod.deb
+
+# .NET 8 SDK 설치
+sudo apt-get update
+sudo apt-get install -y dotnet-sdk-8.0
+
+# 확인
+dotnet --list-sdks
+```
+
+- ARM 보드(예: Cortex-A53)가 `arm64/aarch64`라면 위 방식으로 설치 가능합니다.
+- `armv7`(32-bit) 환경은 .NET 8 SDK 지원이 제한될 수 있으므로 가능하면 64-bit OS(`arm64`) 사용을 권장합니다.
+- RHEL/Fedora 계열 등 다른 배포판은 공식 가이드를 따르세요: https://learn.microsoft.com/dotnet/core/install/linux
+
+#### macOS (Apple Silicon / Intel)
+
+```bash
+# Homebrew 사용 시
+brew update
+brew install --cask dotnet-sdk
+
+# 확인
+dotnet --list-sdks
+```
+
+- Apple Silicon(M1/M2/M3)과 Intel 모두 설치 가능하며, 설치 후 새 터미널에서 다시 확인하세요.
+- Homebrew가 없다면 공식 설치 페이지를 사용하세요: https://dotnet.microsoft.com/download/dotnet/8.0
+
+#### Windows
+
+```powershell
+# winget 사용 시
+winget install Microsoft.DotNet.SDK.8
+
+# 확인
+dotnet --list-sdks
+```
+
+- 이미 Visual Studio 2022(최신)에서 .NET 8 워크로드를 설치했다면 추가 설치가 필요 없을 수 있습니다.
+- winget을 사용하지 않으면 공식 설치 페이지를 사용하세요: https://dotnet.microsoft.com/download/dotnet/8.0
+
 ```bash
 # Python (uv)
 cd devicesim/python
